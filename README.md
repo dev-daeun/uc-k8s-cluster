@@ -33,7 +33,7 @@ Use blue/green deployment strategies
 1. Update docker image with new version.
 2. Deploy the image to blue cluster.
 3. Execute health checks for the deployed version.
-4. Update load balancer to look up the updated blue cluster. (Now it's green one.)
+4. Update service to look up the updated blue cluster. (Now it's green one.)
 5. If health checks fail, rollback 4th step and alert.
 
 ### Reference
