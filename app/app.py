@@ -1,13 +1,15 @@
+import os
+
 from flask import Flask
 
-app = Flask(__name__)
+flask_app = Flask(__name__, root_path=os.path.dirname(os.path.dirname(__file__)))
 
 
-@app.route('/')
+@flask_app.route('/')
 def index():
     return 'Hello, This is DaEun Kim.'
 
 
-@app.route('/info')
+@flask_app.route('/info')
 def info():
     return 'Info'
