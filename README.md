@@ -41,3 +41,6 @@ Use blue/green deployment strategies
 * [The simplest guide to using Blue/Green deployment in k8s](https://codefresh.io/kubernetes-tutorial/blue-green-deploy/)
 * [Fully automated blue/green deployments in k8s with Codefresh](https://codefresh.io/kubernetes-tutorial/fully-automated-blue-green-deployments-kubernetes-codefresh/)
 * [Kubernetes components](https://kubernetes.io/docs/concepts/overview/components/)
+* [Nginx Upstream 성능최적화](https://brunch.co.kr/@alden/11)
+* [Nginx config 정리](http://bong8nim.com/post/programming/etc/nginx-config-manual/)
+* [Nginx full example](https://www.nginx.com/resources/wiki/start/topics/examples/full/)
