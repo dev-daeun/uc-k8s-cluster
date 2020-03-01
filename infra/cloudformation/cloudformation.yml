@@ -1,0 +1,51 @@
+Description:
+  Written by DaEun Kim. This template deploys AWS resources for Kubernetess cluster.
+
+
+Parameters:
+  VpcAZ:
+    Description: AZ for VPC
+    Type: String
+
+  TemplateName:
+    Description: A stack's name to distinguish resources created by CloudFormation.
+    Type: String
+
+  VpcCIDR:
+    Description: IP range (CIDR notation) for VPC
+    Type: String
+
+  PublicSubnet1CIDR:
+    Description: CIDR for public subnet1 in Tokyo AZ
+    Type: String
+
+  PublicSubnet2CIDR:
+    Description: CIDR for public subnet2 in the Seoul AZ
+    Type: String
+
+  PrivateSubnet1CIDR:
+    Description: CIDR for private subnet1 in the Tokyo AZ
+    Type: String
+
+  PrivateSubnet2CIDR:
+    Description: CIDR for private subnet2 in the Seoul AZ
+    Type: String
+
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref TemplateName
+
+  Route53:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: www.udacity-capstone.com
+      VPCs:
+        - VPCId: !Ref VPC
+          VPCRegion: !Ref VpcAZ
