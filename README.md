@@ -11,9 +11,6 @@
 * wsgi
 * Flask
 
-![](./infra_chart.png)
-
-
 ---
 
 
