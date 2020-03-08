@@ -1,3 +1,9 @@
 FROM nginx:1.17.8
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+WORKDIR /home/udacity-capstone
+
+COPY . /home/udacity-capstone
+
+RUN rm /etc/nginx/nginx.conf
+
+RUN cp ./nginx/nginx.conf /etc/nginx/nginx.conf
