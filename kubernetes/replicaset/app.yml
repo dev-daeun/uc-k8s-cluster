@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-flask-wsgi
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: flask-wsgi
+
+  template:
+    metadata:
+      name: pod-flask-wsgi
+      labels:
+        app: flask-wsgi
+    spec:
+      containers:
+        - name: flask-wsgi
+          image: kde260/flask-wsgi:0.0.2
+          ports:
+            - containerPort: 9090
