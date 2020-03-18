@@ -1,23 +1,26 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+
+kind: Deployment
+
 metadata:
-  name: replicaset-nginx
+  name: deployment-nginx
+
 spec:
-  replicas: 4
+  replicas: 3
 
   selector:
     matchLabels:
-      app: nginx
+      app: my-nginx
 
   template:
     metadata:
-      name: pod-nginx
+      name: pod-my-nginx
       labels:
         # selector의 matchLabels과 동일함.
-        app: nginx
+        app: my-nginx
     spec:
       containers:
-        - name: pod-nginx
-          image: nginx:latest
+        - name: my-nginx
+          image: kde6260/my-nginx:0.0.3
           ports:
             - containerPort: 80

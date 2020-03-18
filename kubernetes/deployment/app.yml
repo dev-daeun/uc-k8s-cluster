@@ -1,7 +1,10 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+
+kind: Deployment
+
 metadata:
-  name: replicaset-flask-wsgi
+  name: deployment-flask-wsgi
+
 spec:
   replicas: 3
 
@@ -17,6 +20,6 @@ spec:
     spec:
       containers:
         - name: flask-wsgi
-          image: kde260/flask-wsgi:0.0.2
+          image: kde6260/flask-wsgi:0.0.2
           ports:
             - containerPort: 9090
