@@ -1,0 +1,71 @@
+Description:
+  This template deploys load balancer which distributes traffic to instances in private subnets via NAT in public subnets.
+
+
+Parameters:
+  ServiceName:
+    Type: String
+
+
+Resources:
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets:
+        - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+        - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
+      SecurityGroups:
+        - Fn::ImportValue: !Sub ${ServiceName}-SECURITY-GROUP-LB
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 35
+      HealthCheckPath: /
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 30
+      # if load balancer requests 5 times to target and it returns OK 5 times, it is considered healthy.
+      HealthyThresholdCount: 5
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200
+      # if load balancer requests 5 times to target and it returns Internal Server Error or does not respond 5 times,
+      # it is considered unhealthy.
+      UnhealthyThresholdCount: 5
+      VpcId:
+        Fn::ImportValue: !Sub ${ServiceName}-VPC
+
+  LBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+  LBListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      Conditions:
+        - Field: path-pattern
+          Values: [/]
+      ListenerArn: !Ref LBListener
+      Priority: 1
+
+
+Outputs:
+  LoadBalancer:
+    Value: !Ref LoadBalancer
+    Export:
+      Name: !Sub ${ServiceName}-LB
+
+  TargetGroup:
+    Value: !Ref TargetGroup
+    Export:
+      Name: !Sub ${ServiceName}-LB-TARGET-GROUP
