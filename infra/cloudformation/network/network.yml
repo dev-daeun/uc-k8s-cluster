@@ -1,5 +1,5 @@
 Description:
-  This template deploys network resources for Kubernetess cluster.
+  This template deploys VPC & subnets for Kubernetess cluster.
 
 
 Parameters:
@@ -97,57 +97,6 @@ Resources:
         - Key: Name
           Value: !Sub PrivateSubnet for master in ${ServiceName}
 
-  InternetGateway:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-        - Key: Name
-          Value: !Ref ServiceName
-
-  InternetGatewayAttachment:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      InternetGatewayId: !Ref InternetGateway
-      VpcId: !Ref VPC
-
-  ElasticIPforNATGateway1:
-    Type: AWS::EC2::EIP
-    DependsOn: InternetGatewayAttachment
-    Properties:
-      Domain: vpc
-      Tags:
-        - Key: Name
-          Value: !Sub EIP for NAT in PublicSubnet1
-
-  NATGateway1:
-    Type: AWS::EC2::NatGateway
-    DependsOn: ElasticIPforNATGateway1
-    Properties:
-      AllocationId: !GetAtt ElasticIPforNATGateway1.AllocationId
-      SubnetId: !Ref PubSub1
-      Tags:
-        - Key: Name
-          Value: !Sub NatGateway in PublicSubnet1
-
-  ElasticIPforNATGateway2:
-    Type: AWS::EC2::EIP
-    DependsOn: InternetGatewayAttachment
-    Properties:
-      Domain: vpc
-      Tags:
-        - Key: Name
-          Value: !Sub EIP for NAT in PublicSubnet2
-
-  NATGateway2:
-    Type: AWS::EC2::NatGateway
-    DependsOn: ElasticIPforNATGateway2
-    Properties:
-      AllocationId: !GetAtt ElasticIPforNATGateway2.AllocationId
-      SubnetId: !Ref PubSub2
-      Tags:
-        - Key: Name
-          Value: !Sub NatGateway in PublicSubnet2
-
 
 Outputs:
   VPC:
@@ -179,18 +128,3 @@ Outputs:
     Value: !Ref PriSubMaster
     Export:
       Name: !Sub ${ServiceName}-PrivateSubnetMaster
-
-  InternetGateway:
-    Value: !Ref InternetGateway
-    Export:
-      Name: !Sub ${ServiceName}-InternetGateway
-
-  NATGateway1:
-    Value: !Ref NATGateway1
-    Export:
-      Name: !Sub ${ServiceName}-NATGateway1
-
-  NATGateway2:
-    Value: !Ref NATGateway2
-    Export:
-      Name: !Sub ${ServiceName}-NATGateway2

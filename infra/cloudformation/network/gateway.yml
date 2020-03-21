@@ -1,0 +1,81 @@
+Description:
+  This template deploys Internet & NAT gateways for instances in subnets.
+
+
+Parameters:
+  ServiceName:
+    Description: service's name
+    Type: String
+
+
+Resources:
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Ref ServiceName
+
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId:
+        Fn::ImportValue: !Sub ${ServiceName}-VPC
+
+  ElasticIPforNATGateway1:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub EIP for NATGateway1 in ${ServiceName}
+
+  NATGateway1:
+    Type: AWS::EC2::NatGateway
+    DependsOn: ElasticIPforNATGateway1
+    Properties:
+      AllocationId: !GetAtt ElasticIPforNATGateway1.AllocationId
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub NatGateway in ${ServiceName}
+
+  ElasticIPforNATGateway2:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub EIP for NATGateway1 in ${ServiceName}
+
+  NATGateway2:
+    Type: AWS::EC2::NatGateway
+    DependsOn: ElasticIPforNATGateway2
+    Properties:
+      AllocationId: !GetAtt ElasticIPforNATGateway2.AllocationId
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub NatGateway in ${ServiceName}
+
+
+Outputs:
+  InternetGateway:
+    Value: !Ref InternetGateway
+    Export:
+      Name: !Sub ${ServiceName}-InternetGateway
+
+  NATGateway1:
+    Value: !Ref NATGateway1
+    Export:
+      Name: !Sub ${ServiceName}-NATGateway1
+
+  NATGateway2:
+    Value: !Ref NATGateway2
+    Export:
+      Name: !Sub ${ServiceName}-NATGateway2
