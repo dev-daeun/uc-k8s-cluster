@@ -1,0 +1,41 @@
+Description:
+  This template deploys routers for Kubernetess cluster.
+
+
+Parameters:
+  ServiceName:
+    Description: service's name
+    Type: String
+
+
+Resources:
+  PubRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Fn::ImportValue: !Sub ${ServiceName}-VPC
+      Tags:
+        - Key: Name
+          Value: !Sub PublicRouteTable for ${ServiceName}
+
+  PubRouter:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PubRT
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Fn::ImportValue: !Sub ${ServiceName}-InternetGateway
+
+  PubRouterAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PubRT
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+
+  PubRouterAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PubRT
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
