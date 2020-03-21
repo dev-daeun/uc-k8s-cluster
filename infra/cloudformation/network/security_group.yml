@@ -1,0 +1,65 @@
+Description:
+  This template deploys security group for each instance in subnets.
+
+
+Parameters:
+  ServiceName:
+    Type: String
+
+
+Resources:
+  SecurityGroupForLB:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub security group for Load Balancer in ${ServiceName}
+      GroupName: !Sub ${ServiceName}-SECURITY-GROUP-LB
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${ServiceName}-VPC
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
+          IpProtocol: tcp
+          Description: receive traffic via Internet
+      SecurityGroupEgress:
+        - CidrIp:
+            Fn::ImportValue: !Sub ${ServiceName}-VPC-CIDR
+          FromPort: 80
+          ToPort: 80
+          IpProtocol: tcp
+          Description: transfer traffic from subnets in VPC to outside
+
+  SecurityGroupForNodes:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub security group for nodes in ${ServiceName}
+      GroupName: !Sub ${ServiceName}-SECURITY_GROUP-NODES
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${ServiceName}-VPC
+      SecurityGroupIngress:
+        - CidrIp:
+            Fn::ImportValue: !Sub ${ServiceName}-VPC-CIDR
+          FromPort: 80
+          ToPort: 80
+          IpProtocol: tcp
+          Description: receive traffic from nodes in the same VPC
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 0
+          ToPort: 65535
+          IpProtocol: tcp
+          Description: access internet without restriction to download and update its software
+
+
+Outputs:
+  SecurityGroupForLB:
+    Value: !Ref SecurityGroupForLB
+    Export:
+      Name: !Sub ${ServiceName}-SECURITY-GROUP-LB
+
+  SecurityGroupForNodes:
+    Value: !Ref SecurityGroupForNodes
+    Export:
+      Name: !Sub ${ServiceName}-SECURITY-GROUP-NODES

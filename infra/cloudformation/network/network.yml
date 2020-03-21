@@ -104,6 +104,11 @@ Outputs:
     Export:
       Name: !Sub ${ServiceName}-VPC
 
+  VpcCIDR:
+    Value: !GetAtt VPC.CidrBlock
+    Export:
+      Name: !Sub ${ServiceName}-VPC-CIDR
+
   PubSub1:
     Value: !Ref PubSub1
     Export:
