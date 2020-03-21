@@ -15,7 +15,7 @@ Resources:
         - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
         - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
       SecurityGroups:
-        - Fn::ImportValue: !Sub ${ServiceName}-SECURITY-GROUP-LB
+        - Fn::ImportValue: !Sub ${ServiceName}-SecurityGroupForLB
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
