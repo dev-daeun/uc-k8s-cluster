@@ -184,3 +184,13 @@ Outputs:
     Value: !Ref InternetGateway
     Export:
       Name: !Sub ${ServiceName}-InternetGateway
+
+  NATGateway1:
+    Value: !Ref NATGateway1
+    Export:
+      Name: !Sub ${ServiceName}-NATGateway1
+
+  NATGateway2:
+    Value: !Ref NATGateway2
+    Export:
+      Name: !Sub ${ServiceName}-NATGateway2

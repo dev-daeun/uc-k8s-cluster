@@ -39,3 +39,53 @@ Resources:
       RouteTableId: !Ref PubRT
       SubnetId:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
+
+
+  PriRT1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Fn::ImportValue: !Sub ${ServiceName}-VPC
+      Tags:
+        - Key: Name
+          Value: !Sub PrivateRouteTable1 for ${ServiceName}
+
+  PriRouter1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PriRT1
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Fn::ImportValue: !Sub ${ServiceName}-NATGateway1
+
+  PriRouterAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PriRT1
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PrivateSubnet1
+
+
+  PriRT2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Fn::ImportValue: !Sub ${ServiceName}-VPC
+      Tags:
+        - Key: Name
+          Value: !Sub PrivateRouteTable2 for ${ServiceName}
+
+  PriRouter2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PriRT2
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Fn::ImportValue: !Sub ${ServiceName}-NATGateway2
+
+  PriRouterAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PriRT2
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PrivateSubnet2
