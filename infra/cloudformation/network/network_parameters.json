@@ -1,6 +1,6 @@
 [
   {
-    "ParameterKey": "TemplateName",
+    "ParameterKey": "ServiceName",
     "ParameterValue": "udacity-capstone"
   },
   {

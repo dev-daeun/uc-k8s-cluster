@@ -3,8 +3,8 @@ Description:
 
 
 Parameters:
-  TemplateName:
-    Description: A stack's name
+  ServiceName:
+    Description: service's name
     Type: String
 
   VpcCIDR:
@@ -40,7 +40,7 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Ref TemplateName
+          Value: !Ref ServiceName
 
   PubSub1:
     Type: AWS::EC2::Subnet
@@ -51,7 +51,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub PublicSubnet1 for ${TemplateName}
+          Value: !Sub PublicSubnet1 for ${ServiceName}
 
   PubSub2:
     Type: AWS::EC2::Subnet
@@ -62,7 +62,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub PublicSubnet2 for ${TemplateName}
+          Value: !Sub PublicSubnet2 for ${ServiceName}
 
   PriSubWorker1:
     Type: AWS::EC2::Subnet
@@ -73,7 +73,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet1 for workers in ${TemplateName}
+          Value: !Sub PrivateSubnet1 for workers in ${ServiceName}
 
   PriSubWorker2:
     Type: AWS::EC2::Subnet
@@ -84,7 +84,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet2 for workers in ${TemplateName}
+          Value: !Sub PrivateSubnet2 for workers in ${ServiceName}
 
   PriSubMaster:
     Type: AWS::EC2::Subnet
@@ -95,14 +95,14 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet for master in ${TemplateName}
+          Value: !Sub PrivateSubnet for master in ${ServiceName}
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Ref TemplateName
+          Value: !Ref ServiceName
 
   InternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -153,34 +153,34 @@ Outputs:
   VPC:
     Value: !Ref VPC
     Export:
-      Name: !Sub ${TemplateName}-VPC
+      Name: !Sub ${ServiceName}-VPC
 
   PubSub1:
     Value: !Ref PubSub1
     Export:
-      Name: !Sub ${TemplateName}-PublicSubnet1
+      Name: !Sub ${ServiceName}-PublicSubnet1
 
   PubSub2:
     Value: !Ref PubSub2
     Export:
-      Name: !Sub ${TemplateName}-PublicSubnet2
+      Name: !Sub ${ServiceName}-PublicSubnet2
 
   PriSub1:
     Value: !Ref PriSubWorker1
     Export:
-      Name: !Sub ${TemplateName}-PrivateSubnet1
+      Name: !Sub ${ServiceName}-PrivateSubnet1
 
   PriSub2:
     Value: !Ref PriSubWorker2
     Export:
-      Name: !Sub ${TemplateName}-PrivateSubnet2
+      Name: !Sub ${ServiceName}-PrivateSubnet2
 
   PriSubMaster:
     Value: !Ref PriSubMaster
     Export:
-      Name: !Sub ${TemplateName}-PrivateSubnetMaster
+      Name: !Sub ${ServiceName}-PrivateSubnetMaster
 
   InternetGateway:
     Value: !Ref InternetGateway
     Export:
-      Name: !Sub ${TemplateName}-InternetGateway
+      Name: !Sub ${ServiceName}-InternetGateway
