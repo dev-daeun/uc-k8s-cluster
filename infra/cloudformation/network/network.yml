@@ -147,3 +147,40 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub NatGateway in PublicSubnet2
+
+
+Outputs:
+  VPC:
+    Value: !Ref VPC
+    Export:
+      Name: !Sub ${TemplateName}-VPC
+
+  PubSub1:
+    Value: !Ref PubSub1
+    Export:
+      Name: !Sub ${TemplateName}-PublicSubnet1
+
+  PubSub2:
+    Value: !Ref PubSub2
+    Export:
+      Name: !Sub ${TemplateName}-PublicSubnet2
+
+  PriSub1:
+    Value: !Ref PriSubWorker1
+    Export:
+      Name: !Sub ${TemplateName}-PrivateSubnet1
+
+  PriSub2:
+    Value: !Ref PriSubWorker2
+    Export:
+      Name: !Sub ${TemplateName}-PrivateSubnet2
+
+  PriSubMaster:
+    Value: !Ref PriSubMaster
+    Export:
+      Name: !Sub ${TemplateName}-PrivateSubnetMaster
+
+  InternetGateway:
+    Value: !Ref InternetGateway
+    Export:
+      Name: !Sub ${TemplateName}-InternetGateway
