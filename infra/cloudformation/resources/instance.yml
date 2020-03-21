@@ -1,0 +1,86 @@
+Description:
+  This template deploys k8s master/worker nodes in private subnets.
+
+
+Parameters:
+  ServiceName:
+    Type: String
+
+
+Resources:
+  ControlPlaneNode:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 16
+      ImageId: ami-06d51e91cea0dac8d
+      InstanceType: t2.medium
+      KeyName: udacity-capstone
+      SecurityGroupIds:
+        - Fn::ImportValue: !Sub ${ServiceName}-SecurityGroupForInstances
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PrivateSubnetMaster
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo apt-get update -y
+          sudo apt-get install docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          sudo apt-get install -y apt-transport-https curl
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+          deb https://apt.kubernetes.io/ kubernetes-xenial main
+          EOF
+          sudo apt-get update
+          sudo apt-get install -y kubelet kubeadm kubectl
+          sudo apt-mark hold kubelet kubeadm kubectl
+
+  LaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      AssociatePublicIpAddress: false
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 16
+      ImageId: ami-06d51e91cea0dac8d
+      InstanceType: t3.medium
+      KeyName: udacity-capstone
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo apt-get update -y
+          sudo apt-get install docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          sudo apt-get install -y apt-transport-https curl
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+          deb https://apt.kubernetes.io/ kubernetes-xenial main
+          EOF
+          sudo apt-get update
+          sudo apt-get install -y kubelet kubeadm kubectl
+          sudo apt-mark hold kubelet kubeadm kubectl
+      SecurityGroups:
+        - Fn::ImportValue:
+            !Sub ${ServiceName}-SecurityGroupForInstances
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Sub ${ServiceName}-AutoScalingGroup
+      LaunchConfigurationName: !Ref LaunchConfig
+      VPCZoneIdentifier:
+        - Fn::ImportValue:
+            !Sub ${ServiceName}-PrivateSubnet1
+        - Fn::ImportValue:
+            !Sub ${ServiceName}-PrivateSubnet2
+      MinSize: 4
+      MaxSize: 8
+      TargetGroupARNs:
+        - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerTargetGroup
