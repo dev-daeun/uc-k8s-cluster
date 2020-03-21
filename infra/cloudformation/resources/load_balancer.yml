@@ -63,9 +63,9 @@ Outputs:
   LoadBalancer:
     Value: !Ref LoadBalancer
     Export:
-      Name: !Sub ${ServiceName}-LB
+      Name: !Sub ${ServiceName}-LoadBalancer
 
   TargetGroup:
     Value: !Ref TargetGroup
     Export:
-      Name: !Sub ${ServiceName}-LB-TARGET-GROUP
+      Name: !Sub ${ServiceName}-LoadBalancerTargetGroup
