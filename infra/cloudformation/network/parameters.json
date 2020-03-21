@@ -1,9 +1,5 @@
 [
   {
-    "ParameterKey": "VpcAZ",
-    "ParameterValue": "ap-northeast-2"
-  },
-  {
     "ParameterKey": "TemplateName",
     "ParameterValue": "udacity-capstone"
   },
@@ -12,19 +8,19 @@
     "ParameterValue": "10.0.0.0/16"
   },
   {
-    "ParameterKey": "PublicSubnet1CIDR",
+    "ParameterKey": "PubSubCIDR",
     "ParameterValue": "10.0.0.0/24"
   },
   {
-    "ParameterKey": "PublicSubnet2CIDR",
+    "ParameterKey": "PriSubWorker1CIDR",
     "ParameterValue": "10.0.1.0/24"
   },
   {
-    "ParameterKey": "PrivateSubnet1CIDR",
+    "ParameterKey": "PriSubWorker2CIDR",
     "ParameterValue": "10.0.2.0/24"
   },
   {
-    "ParameterKey": "PrivateSubnet2CIDR",
+    "ParameterKey": "PriSubMasterCIDR",
     "ParameterValue": "10.0.3.0/24"
   }
 ]

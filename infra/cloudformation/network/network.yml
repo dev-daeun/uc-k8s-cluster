@@ -1,0 +1,83 @@
+Description:
+  This template deploys network resources for Kubernetess cluster.
+
+
+Parameters:
+  TemplateName:
+    Description: A stack's name
+    Type: String
+
+  VpcCIDR:
+    Description: IP range (CIDR notation) for VPC
+    Type: String
+
+  PubSubCIDR:
+    Description: CIDR block for public subnet in ap-northeast-2a
+    Type: String
+
+  PriSubWorker1CIDR:
+    Description: CIDR block for private subnet in ap-northeast-2b for worker nodes
+    Type: String
+
+  PriSubWorker2CIDR:
+    Description: CIDR block for private subnet in ap-northeast-2c for worker nodes
+    Type: String
+
+  PriSubMasterCIDR:
+    Description: CIDR block for private subnet in ap-northeast-2a for master node
+    Type: String
+
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref TemplateName
+
+  PubSub:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-2a
+      CidrBlock: !Ref PubSubCIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${TemplateName} PublicSubnet
+
+  PriSubWorker1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-2b
+      CidrBlock: !Ref PriSubWorker1CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${TemplateName} PrivateSubnet Workers1
+
+  PriSubWorker2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-2c
+      CidrBlock: !Ref PriSubWorker2CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${TemplateName} PrivateSubnet Workers2
+
+  PriSubMaster:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-2a
+      CidrBlock: !Ref PriSubMasterCIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${TemplateName} PrivateSubnet for Master
