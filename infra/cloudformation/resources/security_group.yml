@@ -12,7 +12,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Sub security group for Load Balancer in ${ServiceName}
-      GroupName: !Sub ${ServiceName}-SECURITY-GROUP-LB
+      GroupName: !Sub ${ServiceName}-SecurityGroupForLB
       VpcId:
         Fn::ImportValue:
           !Sub ${ServiceName}-VPC
@@ -24,23 +24,23 @@ Resources:
           Description: receive traffic via Internet
       SecurityGroupEgress:
         - CidrIp:
-            Fn::ImportValue: !Sub ${ServiceName}-VPC-CIDR
+            Fn::ImportValue: !Sub ${ServiceName}-VpcCIDR
           FromPort: 80
           ToPort: 80
           IpProtocol: tcp
           Description: transfer traffic from subnets in VPC to outside
 
-  SecurityGroupForNodes:
+  SecurityGroupForInstances:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Sub security group for nodes in ${ServiceName}
-      GroupName: !Sub ${ServiceName}-SECURITY_GROUP-NODES
+      GroupName: !Sub ${ServiceName}-SecurityGroupForInstances
       VpcId:
         Fn::ImportValue:
           !Sub ${ServiceName}-VPC
       SecurityGroupIngress:
         - CidrIp:
-            Fn::ImportValue: !Sub ${ServiceName}-VPC-CIDR
+            Fn::ImportValue: !Sub ${ServiceName}-VpcCIDR
           FromPort: 80
           ToPort: 80
           IpProtocol: tcp
@@ -57,9 +57,9 @@ Outputs:
   SecurityGroupForLB:
     Value: !Ref SecurityGroupForLB
     Export:
-      Name: !Sub ${ServiceName}-SECURITY-GROUP-LB
+      Name: !Sub ${ServiceName}-SecurityGroupForLB
 
-  SecurityGroupForNodes:
-    Value: !Ref SecurityGroupForNodes
+  SecurityGroupForInstances:
+    Value: !Ref SecurityGroupForInstances
     Export:
-      Name: !Sub ${ServiceName}-SECURITY-GROUP-NODES
+      Name: !Sub ${ServiceName}-SecurityGroupForInstances
