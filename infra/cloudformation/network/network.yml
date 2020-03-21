@@ -11,20 +11,24 @@ Parameters:
     Description: IP range (CIDR notation) for VPC
     Type: String
 
-  PubSubCIDR:
-    Description: CIDR block for public subnet in ap-northeast-2a
+  PubSub1CIDR:
+    Description: CIDR block for NAT gateway in public subnet
+    Type: String
+
+  PubSub2CIDR:
+    Description: CIDR block for NAT gateway in public subnet
     Type: String
 
   PriSubWorker1CIDR:
-    Description: CIDR block for private subnet in ap-northeast-2b for worker nodes
+    Description: CIDR block for worker nodes in private subnet
     Type: String
 
   PriSubWorker2CIDR:
-    Description: CIDR block for private subnet in ap-northeast-2c for worker nodes
+    Description: CIDR block for worker nodes in private subnet
     Type: String
 
   PriSubMasterCIDR:
-    Description: CIDR block for private subnet in ap-northeast-2a for master node
+    Description: CIDR block for master node private subnet
     Type: String
 
 
@@ -38,16 +42,27 @@ Resources:
         - Key: Name
           Value: !Ref TemplateName
 
-  PubSub:
+  PubSub1:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2a
-      CidrBlock: !Ref PubSubCIDR
+      AvailabilityZone: ap-northeast-2b
+      CidrBlock: !Ref PubSub1CIDR
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub ${TemplateName} PublicSubnet
+          Value: !Sub PublicSubnet1 for ${TemplateName}
+
+  PubSub2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: ap-northeast-2c
+      CidrBlock: !Ref PubSub2CIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub PublicSubnet2 for ${TemplateName}
 
   PriSubWorker1:
     Type: AWS::EC2::Subnet
@@ -58,7 +73,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub ${TemplateName} PrivateSubnet Workers1
+          Value: !Sub PrivateSubnet1 for workers in ${TemplateName}
 
   PriSubWorker2:
     Type: AWS::EC2::Subnet
@@ -69,7 +84,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub ${TemplateName} PrivateSubnet Workers2
+          Value: !Sub PrivateSubnet2 for workers in ${TemplateName}
 
   PriSubMaster:
     Type: AWS::EC2::Subnet
@@ -80,7 +95,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub ${TemplateName} PrivateSubnet for Master
+          Value: !Sub PrivateSubnet for master in ${TemplateName}
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -95,21 +110,40 @@ Resources:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
 
-  ElasticIPforNATGateway:
+  ElasticIPforNATGateway1:
     Type: AWS::EC2::EIP
     DependsOn: InternetGatewayAttachment
     Properties:
       Domain: vpc
       Tags:
         - Key: Name
-          Value: !Sub EIP for ${TemplateName} PublicSubnet
+          Value: !Sub EIP for NAT in PublicSubnet1
 
-  NATGateway:
+  NATGateway1:
     Type: AWS::EC2::NatGateway
-    DependsOn: ElasticIPforNATGateway
+    DependsOn: ElasticIPforNATGateway1
     Properties:
-      AllocationId: !GetAtt ElasticIPforNATGateway.AllocationId
-      SubnetId: !Ref PubSub
+      AllocationId: !GetAtt ElasticIPforNATGateway1.AllocationId
+      SubnetId: !Ref PubSub1
       Tags:
         - Key: Name
-          Value: !Sub NatGateway for ${TemplateName}
+          Value: !Sub NatGateway in PublicSubnet1
+
+  ElasticIPforNATGateway2:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub EIP for NAT in PublicSubnet2
+
+  NATGateway2:
+    Type: AWS::EC2::NatGateway
+    DependsOn: ElasticIPforNATGateway2
+    Properties:
+      AllocationId: !GetAtt ElasticIPforNATGateway2.AllocationId
+      SubnetId: !Ref PubSub2
+      Tags:
+        - Key: Name
+          Value: !Sub NatGateway in PublicSubnet2
