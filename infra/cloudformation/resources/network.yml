@@ -47,7 +47,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2b
+      AvailabilityZone: us-west-2b
       CidrBlock: !Ref PubSub1CIDR
       MapPublicIpOnLaunch: true
       Tags:
@@ -58,7 +58,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2c
+      AvailabilityZone: us-west-2c
       CidrBlock: !Ref PubSub2CIDR
       MapPublicIpOnLaunch: true
       Tags:
@@ -69,7 +69,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2b
+      AvailabilityZone: us-west-2b
       CidrBlock: !Ref PriSubWorker1CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -80,7 +80,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2c
+      AvailabilityZone: us-west-2c
       CidrBlock: !Ref PriSubWorker2CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -91,7 +91,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: ap-northeast-2a
+      AvailabilityZone: us-west-2a
       CidrBlock: !Ref PriSubMasterCIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -108,7 +108,7 @@ Outputs:
   VpcCIDR:
     Value: !GetAtt VPC.CidrBlock
     Export:
-      Name: !Sub ${ServiceName}-VPC-CIDR
+      Name: !Sub ${ServiceName}-VpcCIDR
 
   PubSub1:
     Value: !Ref PubSub1
