@@ -1,7 +1,0 @@
-Resources:
-  S3:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: k8s-cluster-state.dev-daeun.com
-      VersioningConfiguration:
-        Status: Enabled
