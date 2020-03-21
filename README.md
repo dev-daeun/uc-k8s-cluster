@@ -1,10 +1,20 @@
 # udacity-capstone
 
 
-### Infrastructure
-* A load balancer
-* VPC
-* EC2 machines in VPC (EC2 machines are used as masters and nodes in k8s clusters.)
+### How to deploy AWS resources for k8s cluster
+
+**prerequisite**
+* AWS profile whose default region is `us-west-2`.
+* EC2 key-pair whose name is `udacity-capstone`.
+```
+$ cd infra/cloudformation
+$ sh create_stack.sh uc-network resources/network.yml parameters/cidr.json
+$ sh create_stack.sh uc-gateway resources/gateway.yml parameters/service_name.json
+$ sh create_stack.sh uc-router resources/router.yml parameters/service_name.json
+$ sh create_stack.sh uc-security-group resources/security_group.yml parameters/service_name.json
+$ sh create_stack.sh uc-load-balancer resources/load_balancer.yml parameters/service_name.json
+$ sh create_stack.sh uc-instance resources/instance.yml parameters/service_name.json
+```
 
 ### Web application server
 * nginx
