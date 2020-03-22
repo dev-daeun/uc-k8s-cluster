@@ -71,7 +71,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: us-west-2b
       CidrBlock: !Ref PriSubWorker1CIDR
-      MapPublicIpOnLaunch: true
+      MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
           Value: !Sub PrivateSubnet1 for workers in ${ServiceName}
@@ -82,7 +82,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: us-west-2c
       CidrBlock: !Ref PriSubWorker2CIDR
-      MapPublicIpOnLaunch: true
+      MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
           Value: !Sub PrivateSubnet2 for workers in ${ServiceName}
@@ -93,7 +93,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: us-west-2a
       CidrBlock: !Ref PriSubMasterCIDR
-      MapPublicIpOnLaunch: true
+      MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
           Value: !Sub PrivateSubnet for master in ${ServiceName}
