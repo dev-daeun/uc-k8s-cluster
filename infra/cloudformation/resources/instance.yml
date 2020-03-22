@@ -8,6 +8,19 @@ Parameters:
 
 
 Resources:
+  BastionHost:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+      ImageId: ami-0756ed94dd77be215
+      InstanceType: t2.small
+      KeyName: udacity-capstone
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+
   ControlPlaneNode:
     Type: AWS::EC2::Instance
     Properties:
@@ -15,7 +28,7 @@ Resources:
         - DeviceName: /dev/sda1
           Ebs:
             VolumeSize: 16
-      ImageId: ami-06d51e91cea0dac8d
+      ImageId: ami-0756ed94dd77be215
       InstanceType: t2.medium
       KeyName: udacity-capstone
       SecurityGroupIds:
@@ -23,7 +36,7 @@ Resources:
       SubnetId:
         Fn::ImportValue: !Sub ${ServiceName}-PrivateSubnetMaster
       UserData:
-        Fn::Base64: !Sub |
+        Fn::Base64: |
           #!/bin/bash
           sudo apt-get update -y
           sudo apt-get install docker.io
@@ -42,16 +55,16 @@ Resources:
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      AssociatePublicIpAddress: false
+      AssociatePublicIpAddress: true
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
             VolumeSize: 16
-      ImageId: ami-06d51e91cea0dac8d
+      ImageId: ami-0756ed94dd77be215
       InstanceType: t3.medium
       KeyName: udacity-capstone
       UserData:
-        Fn::Base64: !Sub |
+        Fn::Base64: |
           #!/bin/bash
           sudo apt-get update -y
           sudo apt-get install docker.io
@@ -80,7 +93,7 @@ Resources:
             !Sub ${ServiceName}-PrivateSubnet1
         - Fn::ImportValue:
             !Sub ${ServiceName}-PrivateSubnet2
-      MinSize: 4
-      MaxSize: 8
+      MinSize: 2
+      MaxSize: 4
       TargetGroupARNs:
         - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerTargetGroup
