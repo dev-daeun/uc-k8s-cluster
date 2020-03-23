@@ -38,19 +38,18 @@ Resources:
       UserData:
         Fn::Base64: |
           #!/bin/bash
-          sudo apt-get update -y
-          sudo apt-get install docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-          sudo apt-get install -y apt-transport-https curl
+          apt-get update -y
+          apt-get install -y docker.io
+          systemctl start docker
+          systemctl enable docker
+          apt-get install -y apt-transport-https curl
           curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
           cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
           deb https://apt.kubernetes.io/ kubernetes-xenial main
           EOF
-          sudo apt-get update
-          sudo apt-get install -y kubelet kubeadm kubectl
-          sudo apt-mark hold kubelet kubeadm kubectl
+          apt-get update
+          apt-get install -y kubelet kubeadm kubectl
+          apt-mark hold kubelet kubeadm kubectl
 
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -66,19 +65,18 @@ Resources:
       UserData:
         Fn::Base64: |
           #!/bin/bash
-          sudo apt-get update -y
-          sudo apt-get install docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-          sudo apt-get install -y apt-transport-https curl
+          apt-get update -y
+          apt-get install -y docker.io
+          systemctl start docker
+          systemctl enable docker
+          apt-get install -y apt-transport-https curl
           curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
           cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
           deb https://apt.kubernetes.io/ kubernetes-xenial main
           EOF
-          sudo apt-get update
-          sudo apt-get install -y kubelet kubeadm kubectl
-          sudo apt-mark hold kubelet kubeadm kubectl
+          apt-get update
+          apt-get install -y kubelet kubeadm kubectl
+          apt-mark hold kubelet kubeadm kubectl
       SecurityGroups:
         - Fn::ImportValue:
             !Sub ${ServiceName}-SecurityGroupForInstances
