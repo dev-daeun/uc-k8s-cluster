@@ -21,6 +21,28 @@ Resources:
       SubnetId:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
 
+  CIHost:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+      ImageId: ami-0756ed94dd77be215
+      InstanceType: t2.small
+      KeyName: udacity-capstone
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install default-jdk -y
+          wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.204.1_all.deb
+          apt install ./jenkins_2.204.1_all.deb -y
+          wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+          chmod +x /bin/hadolint
+
   ControlPlaneNode:
     Type: AWS::EC2::Instance
     Properties:
