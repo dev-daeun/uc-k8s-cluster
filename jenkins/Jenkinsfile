@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Lint Python code') {
+            steps {
+                sh 'pip install flake8==3.7.9'
+                sh 'python -m flake8 app/app.py --ignore=E501'
+            }
+        }
+        stage('Lint Dockerfile') {
+            steps {
+                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
+                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
+            }
+        }
+        stage('Test API') {
+            steps {
+                sh 'pip install -r app/requirements.txt'
+                sh 'cd app'
+                sh 'flask run --port 5000'
+                sh 'pytest tests.py'
+                sh "pgrep -f 'flask run --port 5000' | xargs kill"
+            }
+        }
+    }
+}
