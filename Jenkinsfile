@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh 'pip install -r app/requirements.txt'
                 sh 'flask run --port 5000 &'
-                sh 'pytest tests.py'
+                sh 'pytest app/tests.py'
                 sh "pgrep -f 'flask run --port 5000' | xargs kill"
             }
         }
