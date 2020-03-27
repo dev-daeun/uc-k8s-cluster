@@ -5,6 +5,9 @@ pipeline {
             args '-u root:root'
         }
     }
+    environment {
+        FLASK_APP = 'app/app:flask_app'
+    }
     stages {
         stage('Lint Python code') {
             steps {
@@ -22,7 +25,6 @@ pipeline {
         stage('Test API') {
             steps {
                 sh 'pip install -r app/requirements.txt'
-                sh 'export FLASK_APP=app/app:flask_app'
                 sh 'flask run --port 5000'
                 sh 'pytest tests.py'
                 sh "pgrep -f 'flask run --port 5000' | xargs kill"
