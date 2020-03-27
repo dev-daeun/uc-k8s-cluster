@@ -1,10 +1,22 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.7.3-stretch'
+            args '-u root:root'
+        }
+    }
     stages {
         stage('Lint Python code') {
             steps {
+                sh 'pip install --upgrade pip'
                 sh 'pip install flake8==3.7.9'
-                sh 'python -m flake8 app/app.py --ignore=E501'
+                sh 'python3 -m flake8 app/app.py --ignore=E501'
+            }
+        }
+        stage('Install hadolint') {
+            steps {
+                sh 'wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64'
+                sh 'chmod +x /bin/hadolint'
             }
         }
         stage('Lint Dockerfile') {
