@@ -9,6 +9,11 @@ pipeline {
         FLASK_APP = 'app/app:flask_app'
     }
     stages {
+        stage('Activate virtualenv') {
+            steps {
+                sh 'pyenv activate test-environ'
+            }
+        }
         stage('Lint Python code') {
             steps {
                 sh 'pip install --upgrade pip'
