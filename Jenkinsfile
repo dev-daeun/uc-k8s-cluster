@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'kde6260/jenkins-agent:latest'
-            args '-u root:root'
+            image 'python:3.7.3-stretch'
         }
     }
     environment {
@@ -13,13 +12,15 @@ pipeline {
             steps {
                 sh 'pip install --upgrade pip'
                 sh 'pip install flake8==3.7.9'
-                sh 'python3 -m flake8 app/app.py --ignore=E501'
+                sh 'python -m flake8 app/app.py --ignore=E501'
             }
         }
         stage('Lint Dockerfile') {
             steps {
-                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
-                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
+                sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64'
+                sh 'chmod +x ./hadolint'
+                sh './hadolint docker/app/Dockerfile --ignore DL3013'
+                sh './hadolint docker/app/Dockerfile --ignore DL3013'
             }
         }
         stage('Test API') {
