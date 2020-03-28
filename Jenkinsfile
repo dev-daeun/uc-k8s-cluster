@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'kde6260/jenkins-agent'
+            args '-u root'
         }
     }
     environment {
@@ -10,8 +11,6 @@ pipeline {
     stages {
         stage('Lint Python code') {
             steps {
-                sh 'cd /home/testuser'
-                sh 'pyenv activate test-environ'
                 sh 'pip install --upgrade pip'
                 sh 'pip install flake8==3.7.9'
                 sh 'python -m flake8 app/app.py --ignore=E501'
@@ -19,8 +18,6 @@ pipeline {
         }
         stage('Lint Dockerfile') {
             steps {
-                sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64'
-                sh 'chmod +x ./hadolint'
                 sh './hadolint docker/app/Dockerfile --ignore DL3013'
                 sh './hadolint docker/app/Dockerfile --ignore DL3013'
             }
