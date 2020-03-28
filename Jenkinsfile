@@ -18,8 +18,8 @@ pipeline {
         }
         stage('Lint Dockerfile') {
             steps {
-                sh './hadolint docker/app/Dockerfile --ignore DL3013'
-                sh './hadolint docker/app/Dockerfile --ignore DL3013'
+                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
+                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
             }
         }
         stage('Test API') {
