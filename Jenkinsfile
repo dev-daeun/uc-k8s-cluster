@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.7.3-stretch'
+            image 'kde6260/jenkins-agent'
         }
     }
     environment {
@@ -10,6 +10,8 @@ pipeline {
     stages {
         stage('Lint Python code') {
             steps {
+                sh 'cd /home/testuser'
+                sh 'pyenv activate test-environ'
                 sh 'pip install --upgrade pip'
                 sh 'pip install flake8==3.7.9'
                 sh 'python -m flake8 app/app.py --ignore=E501'
