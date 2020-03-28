@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'kde6260/jenkins-agent:latest'
-            args '-u root:root'
+            args '-u testuser'
         }
     }
     environment {
@@ -18,8 +18,8 @@ pipeline {
         }
         stage('Lint Dockerfile') {
             steps {
-                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
-                sh 'hadolint docker/app/Dockerfile --ignore DL3013'
+                sh './hadolint docker/app/Dockerfile --ignore DL3013'
+                sh './hadolint docker/app/Dockerfile --ignore DL3013'
             }
         }
         stage('Test API') {
