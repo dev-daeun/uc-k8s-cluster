@@ -8,6 +8,11 @@ jobs:
     steps:
       - checkout
 
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "app/requirements.txt" }}
+            - v1-dependencies-
+
       - run:
           name: Set virtualenv
           command: |
@@ -34,3 +39,8 @@ jobs:
             export FLASK_APP=app/app:flask_app
             flask run --port 5000 &
             pytest app/tests.py
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "app/requirements.txt" }}
