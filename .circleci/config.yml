@@ -1,36 +1,13 @@
-version: 2
-jobs:
-  build:
-    working_directory: ~/udacity-capstone
-    docker:
-      - image: kde6260/circleci-agent:latest
-
-    steps:
-      - checkout
-
-      - run:
-          name: Set virtualenv
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-
-      - run:
-          name: Lint Dockerfile
-          command: |
-            hadolint docker/app/Dockerfile --ignore DL3013
-            hadolint docker/nginx/Dockerfile --ignore DL3013
-
-      - run:
-          name: Install dependencies
-          command: pip install -r app/requirements.txt
-
-      - run:
-          name: Lint Python code
-          command: pylint --disable=R,C,W1203 app/app.py
-
-      - run:
-          name: Execute Pytest
-          command: |
-            export FLASK_APP=app/app:flask_app
-            flask run --port 5000 &
-            pytest app/tests.py
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
+# Orchestrate or schedule a set of jobs
+workflows:
+  # Name the workflow "welcome"
+  welcome:
+    # Run the welcome/run job in its own container
+    jobs:
+      - welcome/run
