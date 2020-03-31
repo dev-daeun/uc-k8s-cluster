@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/udacity-capstone
+    docker:
+      - image: kde6260/circleci-agent:latest
+
+    steps:
+      - checkout
+
+      - run:
+          name: Set virtualenv
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+
+      - run:
+          name: Lint Dockerfile
+          command: |
+            hadolint docker/app/Dockerfile --ignore DL3013
+            hadolint docker/nginx/Dockerfile --ignore DL3013
+
+      - run:
+          name: Install dependencies
+          command: pip install -r app/requirements.txt
+
+      - run:
+          name: Lint Python code
+          command: pylint --disable=R,C,W1203 app/app.py
+
+      - run:
+          name: Execute Pytest
+          command: |
+            export FLASK_APP=app/app:flask_app
+            flask run --port 5000 &
+            pytest app/tests.py
