@@ -1,4 +1,5 @@
-# udacity-capstone
+# udacity-capstone [![<CircleCI>](https://circleci.com/gh/dev-daeun/udacity-capstone.svg?style=svg)](https://app.circleci.com/pipelines/github/dev-daeun/udacity-capstone)
+
 
 
 ### How to deploy AWS resources for k8s cluster
