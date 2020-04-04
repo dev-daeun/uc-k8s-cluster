@@ -19,7 +19,7 @@ Resources:
       InstanceType: t2.small
       KeyName: udacity-capstone
       SubnetId:
-        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnetMaster
 
   ControlPlaneNode:
     Type: AWS::EC2::Instance
@@ -93,5 +93,22 @@ Resources:
             !Sub ${ServiceName}-PrivateSubnet2
       MinSize: 2
       MaxSize: 4
-      TargetGroupARNs:
-        - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerTargetGroup
+#      TargetGroupARNs:
+#        - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerTargetGroup
+
+
+Outputs:
+  BastionHost:
+    Value: !Ref BastionHost
+    Export:
+      Name: !Sub ${ServiceName}-BastionHost
+
+  ControlPlaneNode:
+    Value: !Ref ControlPlaneNode
+    Export:
+      Name: !Sub ${ServiceName}-ControlPlaneNode
+
+  ControlPlaneNodePrivateIp:
+    Value: !GetAtt ControlPlaneNode.PrivateIp
+    Export:
+      Name: !Sub ${ServiceName}-ControlPlaneNodePIP
