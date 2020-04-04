@@ -19,6 +19,10 @@ Parameters:
     Description: CIDR block for NAT gateway in public subnet
     Type: String
 
+  PubSubMasterCIDR:
+    Description: CIDR block for NAT gateway in public subnet
+    Type: String
+
   PriSubWorker1CIDR:
     Description: CIDR block for worker nodes in private subnet
     Type: String
@@ -64,6 +68,17 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub PublicSubnet2 for ${ServiceName}
+
+  PubSubMaster:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: us-west-2a
+      CidrBlock: !Ref PubSubMasterCIDR
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub PublicSubnetMaster for ${ServiceName}
 
   PriSubWorker1:
     Type: AWS::EC2::Subnet
@@ -119,6 +134,11 @@ Outputs:
     Value: !Ref PubSub2
     Export:
       Name: !Sub ${ServiceName}-PublicSubnet2
+
+  PubSubMaster:
+    Value: !Ref PubSubMaster
+    Export:
+      Name: !Sub ${ServiceName}-PublicSubnetMaster
 
   PriSub1:
     Value: !Ref PriSubWorker1

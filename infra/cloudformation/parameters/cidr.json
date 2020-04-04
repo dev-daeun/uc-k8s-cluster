@@ -9,22 +9,26 @@
   },
   {
     "ParameterKey": "PubSub1CIDR",
-    "ParameterValue": "10.0.0.0/24"
-  },
-  {
-    "ParameterKey": "PubSub2CIDR",
     "ParameterValue": "10.0.1.0/24"
   },
   {
-    "ParameterKey": "PriSubWorker1CIDR",
+    "ParameterKey": "PubSub2CIDR",
     "ParameterValue": "10.0.2.0/24"
   },
   {
-    "ParameterKey": "PriSubWorker2CIDR",
+    "ParameterKey": "PubSubMasterCIDR",
+    "ParameterValue": "10.0.5.0/24"
+  },
+  {
+    "ParameterKey": "PriSubWorker1CIDR",
     "ParameterValue": "10.0.3.0/24"
   },
   {
-    "ParameterKey": "PriSubMasterCIDR",
+    "ParameterKey": "PriSubWorker2CIDR",
     "ParameterValue": "10.0.4.0/24"
+  },
+  {
+    "ParameterKey": "PriSubMasterCIDR",
+    "ParameterValue": "10.0.6.0/24"
   }
 ]
