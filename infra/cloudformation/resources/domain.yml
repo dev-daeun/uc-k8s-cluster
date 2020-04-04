@@ -1,0 +1,30 @@
+Description:
+  This template deploys hostedzone & recordset for resources in vpc.
+
+Parameters:
+  ServiceName:
+    Type: String
+
+
+Resources:
+  HZforVPC:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      # name created in Route53 registrar
+      Name: dev-daeun.com
+      VPCs:
+        - VPCId:
+            Fn::ImportValue: !Sub ${ServiceName}-VPC
+          VPCRegion: us-west-2
+
+  RecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HZforVPC
+      Name: k8s-master.dev-daeun.com
+      Region: us-west-2
+      Type: A
+      TTL: 120
+      SetIdentifier: 1111
+      ResourceRecords:
+        - Fn::ImportValue: !Sub ${ServiceName}-ControlPlaneNodePIP
