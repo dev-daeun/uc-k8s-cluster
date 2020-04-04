@@ -51,6 +51,12 @@ Resources:
           ToPort: 22
           IpProtocol: tcp
           Description: allow SSH access from nodes in the same VPC
+        - CidrIp:
+            Fn::ImportValue: !Sub ${ServiceName}-VpcCIDR
+          FromPort: 6443
+          ToPort: 6443
+          IpProtocol: tcp
+          Description: k8s api-server bind port
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
           FromPort: 0
