@@ -63,6 +63,25 @@ Resources:
         - Key: Name
           Value: !Sub NatGateway in ${ServiceName}
 
+  ElasticIPforNATGatewayMaster:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub EIP for NATGatewayMaster in ${ServiceName}
+
+  NATGatewayMaster:
+    Type: AWS::EC2::NatGateway
+    DependsOn: ElasticIPforNATGatewayMaster
+    Properties:
+      AllocationId: !GetAtt ElasticIPforNATGatewayMaster.AllocationId
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnetMaster
+      Tags:
+        - Key: Name
+          Value: !Sub NatGateway in ${ServiceName}
 
 Outputs:
   InternetGateway:
@@ -79,3 +98,8 @@ Outputs:
     Value: !Ref NATGateway2
     Export:
       Name: !Sub ${ServiceName}-NATGateway2
+
+  NATGatewayMaster:
+    Value: !Ref NATGatewayMaster
+    Export:
+      Name: !Sub ${ServiceName}-NATGatewayMaster
