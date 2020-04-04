@@ -60,7 +60,7 @@ Resources:
           Ebs:
             VolumeSize: 16
       ImageId: ami-0756ed94dd77be215
-      InstanceType: t3.medium
+      InstanceType: t2.medium
       KeyName: udacity-capstone
       UserData:
         Fn::Base64: |
