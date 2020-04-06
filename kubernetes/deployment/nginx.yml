@@ -6,7 +6,7 @@ metadata:
   name: deployment-nginx
 
 spec:
-  replicas: 3
+  replicas: 12
 
   selector:
     matchLabels:
@@ -23,6 +23,12 @@ spec:
     spec:
       containers:
         - name: my-nginx
-          image: kde6260/my-nginx:0.0.4
+          image: kde6260/my-nginx:${NGINX_VERSION}
           ports:
             - containerPort: 80
+
+    strategy:
+      type: RollingUpdate
+      rollingupdate:
+        maxSurge: 3
+        maxUnavailable: 4

@@ -6,7 +6,7 @@ metadata:
   name: deployment-flask-wsgi
 
 spec:
-  replicas: 3
+  replicas: 12
 
   selector:
     matchLabels:
@@ -22,6 +22,12 @@ spec:
     spec:
       containers:
         - name: flask-wsgi
-          image: kde6260/flask-wsgi:0.0.2
+          image: kde6260/flask-wsgi:${APP_VERSION}
           ports:
             - containerPort: 9090
+
+  strategy:
+    type: RollingUpdate
+    rollingupdate:
+      maxSurge: 3
+      maxUnavailable: 4
