@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app: my-nginx
 
+  revisionHistoryLimit: 5
+
   template:
     metadata:
       name: pod-my-nginx

@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app: flask-wsgi
 
+  revisionHistoryLimit: 5
+
   template:
     metadata:
       name: pod-flask-wsgi
