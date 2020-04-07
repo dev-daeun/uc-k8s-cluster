@@ -88,7 +88,7 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId:
         Fn::ImportValue: !Sub ${ServiceName}-NATGateway2
-q
+
   PriRouterAssociation2:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
