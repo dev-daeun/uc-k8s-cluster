@@ -27,8 +27,8 @@ spec:
           ports:
             - containerPort: 80
 
-    strategy:
-      type: RollingUpdate
-      rollingupdate:
-        maxSurge: 3
-        maxUnavailable: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 4
