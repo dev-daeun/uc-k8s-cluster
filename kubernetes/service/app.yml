@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 
 metadata:
+  namespace: production
   name: service-flask-wsgi
 
 spec:
