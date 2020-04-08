@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  namespace: production
+  namespace: production-app
   name: deployment-flask-wsgi
 
 spec:
