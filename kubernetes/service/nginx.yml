@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  namespace: production-nginx
+  namespace: production
   name: service-my-nginx
 
 spec:
