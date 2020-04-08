@@ -65,6 +65,11 @@ Outputs:
     Export:
       Name: !Sub ${ServiceName}-LoadBalancer
 
+  LoadBalancerDNSname:
+    Value: !GetAtt LoadBalancer.DNSName
+    Export:
+      Name: !Sub ${ServiceName}-LoadBalancerDNSname
+
   TargetGroup:
     Value: !Ref TargetGroup
     Export:
