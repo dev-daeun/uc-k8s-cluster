@@ -11,7 +11,7 @@ metadata:
 
 spec:
   rules:
-    - host: www.dev-daeun.com
+    - host: dualstack.uc-lb-LoadB-16BVR9XDNKBO4-250509470.us-west-2.elb.amazonaws.com
       http:
         paths:
           - path: /
