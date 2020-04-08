@@ -7,24 +7,43 @@ Parameters:
 
 
 Resources:
+  # root domain 'dev-daeun.com' created in Route53 registrar
   HZforVPC:
     Type: AWS::Route53::HostedZone
     Properties:
-      # name created in Route53 registrar
-      Name: dev-daeun.com
+      Name: k8s.dev-daeun.com
       VPCs:
         - VPCId:
             Fn::ImportValue: !Sub ${ServiceName}-VPC
           VPCRegion: us-west-2
 
-  RecordSet:
+  HZforPublic:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: www.dev-daeun.com
+
+  RecordSetMasterNode:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneId: !Ref HZforVPC
-      Name: k8s-master.dev-daeun.com
+      Name: master.k8s.dev-daeun.com
       Region: us-west-2
       Type: A
       TTL: 120
       SetIdentifier: 1111
       ResourceRecords:
         - Fn::ImportValue: !Sub ${ServiceName}-ControlPlaneNodePIP
+
+  RecordSetLB:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HZforPublic
+      AliasTarget:
+        DNSName:
+          Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerDNSname
+        HostedZoneId:
+          Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerHZID
+      Name: www.dev-daeun.com
+      Region: us-west-2
+      Type: CNAME
+      SetIdentifier: 2222
