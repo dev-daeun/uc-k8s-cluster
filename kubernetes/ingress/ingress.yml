@@ -16,5 +16,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: service-my-nginx
-              servicePort: 80
+              serviceName: service-flask-wsgi
+              servicePort: 9090
