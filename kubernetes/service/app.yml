@@ -4,6 +4,7 @@ kind: Service
 
 metadata:
   name: service-flask-wsgi
+  namespace: ingress-nginx
 
 spec:
   type: ClusterIP
