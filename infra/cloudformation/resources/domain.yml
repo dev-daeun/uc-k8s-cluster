@@ -20,7 +20,7 @@ Resources:
   HZforPublic:
     Type: AWS::Route53::HostedZone
     Properties:
-      Name: www.dev-daeun.com
+      Name: dev-daeun.com
 
   RecordSetMasterNode:
     Type: AWS::Route53::RecordSet
@@ -38,12 +38,10 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneId: !Ref HZforPublic
-      AliasTarget:
-        DNSName:
-          Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerDNSname
-        HostedZoneId:
-          Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerHZID
       Name: www.dev-daeun.com
       Region: us-west-2
       Type: CNAME
+      TTL: 30
       SetIdentifier: 2222
+      ResourceRecords:
+        - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerDNSname
