@@ -4,6 +4,7 @@ kind: Ingress
 
 metadata:
   name: uc-ingress
+  namespace: ingress-nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
