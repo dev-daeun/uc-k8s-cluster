@@ -2,7 +2,7 @@
 
 
 
-### How to deploy AWS resources for k8s cluster
+## How to deploy AWS resources for k8s cluster
 
 **prerequisite**
 * AWS profile whose default region is `us-west-2`.
@@ -17,32 +17,23 @@ $ sh create_stack.sh uc-load-balancer resources/load_balancer.yml parameters/ser
 $ sh create_stack.sh uc-instance resources/instance.yml parameters/service_name.json
 ```
 
-### Web application server
-* nginx
-* wsgi
-* Flask
 
----
+## CI & CD 
+* CircleCI for Continuous Integration
+* Jenkins for Continues Deployment
 
 
-### CI & CD 
-* Use Jenkins 
+### CI workflow
+1. Lint Python code
+2. Lint Dockerfile
+3. Execute unit tests
 
-##### Steps of Continuous Integration
-1. Lint Python Code & Dockerfile.
-2. Setup Python environment.
-3. Install dependencies of Flask application server.
-4. Scans security vulnerabilities with [Snyk](https://support.snyk.io/hc/en-us/articles/360004032217-Jenkins-integration-overview).
-4. Execute unit tests.
-
-##### Steps of Continuous Deployment
-Use blue/green deployment strategies
-
-1. Update docker image with new version.
-2. Deploy the image to blue cluster.
-3. Execute health checks for the deployed version.
-4. Update service to look up the updated blue cluster. (Now it's green one.)
-5. If health checks fail, rollback 4th step and alert.
+### CD workflow
+1. Build and push docker image whose version is in the branch which passed CI workflow.
+2. Update Kubernetes deployment template to the version of pushed image.
+3. Apply updated template to Kubernetes cluster.
+4. Execute sanity check in newly deployed cluster. Request to load-balancer in production environment.
+5. If there's something wrong in sanity check, rollback to previous version of image.
 
 ### Reference
 * [Install a Kubernetes cluster on AWS using kops](https://kubernetes.io/docs/setup/production-environment/tools/kops/)
