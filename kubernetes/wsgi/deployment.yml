@@ -4,7 +4,6 @@ kind: Deployment
 
 metadata:
   name: deployment-flask-wsgi
-  namespace: ingress-nginx
 
 spec:
   replicas: 12

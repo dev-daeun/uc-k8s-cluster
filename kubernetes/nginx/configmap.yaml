@@ -47,7 +47,6 @@ metadata:
     operation: Update
     time: "2020-04-09T14:23:20Z"
   name: nginx-config
-  namespace: ingress-nginx
   resourceVersion: "212563"
   selfLink: /api/v1/namespaces/default/configmaps/nginx-config
   uid: 74f4d7ab-1f5b-48fa-a858-1c533742f35d
