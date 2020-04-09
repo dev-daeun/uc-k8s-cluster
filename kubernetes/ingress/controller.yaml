@@ -215,6 +215,12 @@ spec:
       serviceAccountName: nginx-ingress-serviceaccount
       nodeSelector:
         kubernetes.io/os: linux
+
+      volumes:
+        - name: nginx-config-wsgi
+          configMap:
+            name: nginx-config
+
       containers:
         - name: nginx-ingress-controller
           image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0
@@ -225,6 +231,12 @@ spec:
             - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
             - --publish-service=$(POD_NAMESPACE)/ingress-nginx
             - --annotations-prefix=nginx.ingress.kubernetes.io
+
+          # custom config file for wsgi connection
+          volumeMounts:
+            - name: nginx-config-wsgi
+              mountPath: /etc/nginx/nginx/conf
+
           securityContext:
             allowPrivilegeEscalation: true
             capabilities:
