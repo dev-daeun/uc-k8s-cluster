@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
 
 ---
-
 apiVersion: v1
 data:
   nginx.conf: |
@@ -56,11 +55,21 @@ metadata:
     manager: kubectl
     operation: Update
     time: "2020-04-11T05:46:27Z"
-  name: nginx-configuration
+  name: nginx-custom-config
   namespace: ingress-nginx
   resourceVersion: "554851"
-  selfLink: /api/v1/namespaces/ingress-nginx/configmaps/nginx-configuration
+  selfLink: /api/v1/namespaces/ingress-nginx/configmaps/nginx-custom-config
   uid: 35dd71a6-bc76-4c52-ad54-529bacb4408d
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-configuration
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 
 ---
 kind: ConfigMap
@@ -264,7 +273,7 @@ spec:
       volumes:
         - name: nginx-config-for-wsgi
           configMap:
-            name: nginx-configuration
+            name: nginx-custom-config
 
       containers:
         - name: nginx-ingress-controller

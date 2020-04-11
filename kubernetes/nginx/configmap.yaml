@@ -46,8 +46,8 @@ metadata:
     manager: kubectl
     operation: Update
     time: "2020-04-11T05:46:27Z"
-  name: nginx-configuration
+  name: nginx-custom-config
   namespace: ingress-nginx
   resourceVersion: "554851"
-  selfLink: /api/v1/namespaces/ingress-nginx/configmaps/nginx-configuration
+  selfLink: /api/v1/namespaces/ingress-nginx/configmaps/nginx-custom-config
   uid: 35dd71a6-bc76-4c52-ad54-529bacb4408d
