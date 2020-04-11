@@ -218,7 +218,10 @@ spec:
       volumes:
         - name: nginx-config-for-wsgi
           configMap:
-            name: nginx-custom-config
+            name: nginx-configuration
+            items:
+              - key: nginx.conf
+                path: ngix.conf
       containers:
         - name: nginx-ingress-controller
           image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0
