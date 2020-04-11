@@ -10,6 +10,4 @@ RUN pip install --upgrade pip && pip install --trusted-host pypi.python.org -r a
 
 EXPOSE 9090
 
-ENV FLASK_APP app/app:flask_app
-
-ENTRYPOINT ["flask", "run", "--port", "9090"]
+ENTRYPOINT ["uwsgi", "uwsgi.ini"]
