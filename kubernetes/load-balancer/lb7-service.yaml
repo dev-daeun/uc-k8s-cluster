@@ -11,6 +11,8 @@ spec:
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
+  externalIPs:
+    - uc-lb-loadb-1mr95cdp83k3e-797707118.us-west-2.elb.amazonaws.com
   ports:
     - name: http
       port: 80
