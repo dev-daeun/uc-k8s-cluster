@@ -48,7 +48,8 @@ spec:
           # custom config file for wsgi connection
           volumeMounts:
             - name: nginx-config-for-wsgi
-              mountPath: /etc/nginx/
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
           securityContext:
             allowPrivilegeEscalation: true
             capabilities:
