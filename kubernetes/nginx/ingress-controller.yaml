@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
 
 ---
+
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -15,43 +16,6 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-data:
-  use-proxy-protocol: "false"
-  use-forwarded-headers: "true"
-  proxy-real-ip-cidr: "0.0.0.0/0" # restrict this to the IP addresses of ELB
-  nginx.conf: |
-    user nginx;
-    worker_processes auto;
-    pid /var/run/nginx.pid;
-
-    events {
-        worker_connections 1024;
-        multi_accept on;
-    }
-
-    http {
-        log_format main '$remote_addr - $remote_user [$time_local]  $status '
-                        '"$request" $body_bytes_sent "$http_referer" '
-                        '"$http_user_agent" "$http_x_forwarded_for"';
-
-        error_log  /var/log/nginx/error.log warn;
-        access_log /var/log/nginx/access.log main;
-
-        upstream flask_server {
-            server service-flask-wsgi:9090;
-            keepalive 512;
-            keepalive_timeout 5;
-        }
-        server {
-            listen 80;
-            server_name service-flask-wsgi;
-
-            location / {
-                include /etc/nginx/uwsgi_params;
-                uwsgi_pass flask_server;
-            }
-        }
-    }
 
 ---
 kind: ConfigMap
@@ -251,13 +215,6 @@ spec:
       serviceAccountName: nginx-ingress-serviceaccount
       nodeSelector:
         kubernetes.io/os: linux
-      volumes:
-        - name: nginx-config-for-wsgi
-          configMap:
-            name: nginx-configuration
-            items:
-              - key: nginx.conf
-                path: nginx.conf
       containers:
         - name: nginx-ingress-controller
           image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0
@@ -268,10 +225,6 @@ spec:
             - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
             - --publish-service=$(POD_NAMESPACE)/ingress-nginx
             - --annotations-prefix=nginx.ingress.kubernetes.io
-          # custom config file for wsgi connection
-          volumeMounts:
-            - name: nginx-config-for-wsgi
-              mountPath: /etc/nginx/
           securityContext:
             allowPrivilegeEscalation: true
             capabilities:
