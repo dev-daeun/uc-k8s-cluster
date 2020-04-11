@@ -11,7 +11,7 @@ data:
   use-forwarded-headers: "true"
   proxy-real-ip-cidr: "0.0.0.0/0" # restrict this to the IP addresses of ELB
   nginx.conf: |
-    user nginx;
+    user root;
     worker_processes auto;
     pid /var/run/nginx.pid;
 
