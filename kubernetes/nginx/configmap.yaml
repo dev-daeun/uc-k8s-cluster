@@ -35,7 +35,7 @@ data:
     }
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2020-04-09T14:23:20Z"
+  creationTimestamp: "2020-04-11T05:46:27Z"
   managedFields:
   - apiVersion: v1
     fieldsType: FieldsV1
@@ -45,8 +45,9 @@ metadata:
         f:nginx.conf: {}
     manager: kubectl
     operation: Update
-    time: "2020-04-09T14:23:20Z"
-  name: nginx-config
-  resourceVersion: "212563"
-  selfLink: /api/v1/namespaces/default/configmaps/nginx-config
-  uid: 74f4d7ab-1f5b-48fa-a858-1c533742f35d
+    time: "2020-04-11T05:46:27Z"
+  name: nginx-configuration
+  namespace: ingress-nginx
+  resourceVersion: "554851"
+  selfLink: /api/v1/namespaces/ingress-nginx/configmaps/nginx-configuration
+  uid: 35dd71a6-bc76-4c52-ad54-529bacb4408d
