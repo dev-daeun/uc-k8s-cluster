@@ -13,4 +13,4 @@ spec:
     - name: port-my-nginx
       port: 8080
       targetPort: port-flask-wsgi
-      nodePort: 80
+      nodePort: 30080
