@@ -26,7 +26,7 @@ Resources:
       HealthCheckTimeoutSeconds: 30
       # if load balancer requests 5 times to target and it returns OK 5 times, it is considered healthy.
       HealthyThresholdCount: 5
-      Port: 80
+      Port: 30080
       Protocol: HTTP
       Matcher:
         HttpCode: 200
