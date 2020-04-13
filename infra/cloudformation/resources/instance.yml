@@ -91,8 +91,8 @@ Resources:
             !Sub ${ServiceName}-PrivateSubnet1
         - Fn::ImportValue:
             !Sub ${ServiceName}-PrivateSubnet2
-      MinSize: 3
-      MaxSize: 6
+      MinSize: 2
+      MaxSize: 4
       TargetGroupARNs:
         - Fn::ImportValue: !Sub ${ServiceName}-LoadBalancerTargetGroup
 
