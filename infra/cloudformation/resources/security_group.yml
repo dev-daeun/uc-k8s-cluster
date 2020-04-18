@@ -25,8 +25,8 @@ Resources:
       SecurityGroupEgress:
         - CidrIp:
             Fn::ImportValue: !Sub ${ServiceName}-VpcCIDR
-          FromPort: 80
-          ToPort: 80
+          FromPort: 30080
+          ToPort: 30080
           IpProtocol: tcp
           Description: transfer traffic from outside to subnets in VPC
 

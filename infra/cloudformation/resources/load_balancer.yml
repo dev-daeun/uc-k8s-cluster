@@ -27,17 +27,17 @@ Resources:
     Properties:
       HealthCheckEnabled: true
       # HealthCheckIntervalSeconds should be bigger than HealthCheckTimeoutSeconds.
-      HealthCheckIntervalSeconds: 15
+      HealthCheckIntervalSeconds: 30
       HealthCheckPath: /
-      HealthCheckPort: 80
+      HealthCheckPort: 30080
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 10
+      HealthCheckTimeoutSeconds: 15
       # if load balancer requests 5 times to target and it returns OK 5 times, it is considered healthy.
       HealthyThresholdCount: 5
       # if load balancer requests 5 times to target and it returns Internal Server Error or does not respond 5 times,
       # it is considered unhealthy.
       UnhealthyThresholdCount: 5
-      Port: 80
+      Port: 30080
       Protocol: HTTP
       Matcher:
         HttpCode: 200
