@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
         - name: my-nginx
-          image: kde6260/my-nginx:0.0.5
+          image: kde6260/my-nginx:0.0.6
           ports:
             - containerPort: 80
