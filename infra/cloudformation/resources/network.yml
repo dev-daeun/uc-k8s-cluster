@@ -111,7 +111,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet for master in ${ServiceName}
+          Value: !Sub PrivateSubnetMaster in ${ServiceName}
 
 
 Outputs:
