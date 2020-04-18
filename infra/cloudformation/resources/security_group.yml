@@ -12,7 +12,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Sub security group for Load Balancer in ${ServiceName}
-      GroupName: !Sub ${ServiceName}-SecurityGroupForLB
+      GroupName: SecurityGroupForLB
       VpcId:
         Fn::ImportValue:
           !Sub ${ServiceName}-VPC
@@ -25,8 +25,8 @@ Resources:
       SecurityGroupEgress:
         - CidrIp:
             Fn::ImportValue: !Sub ${ServiceName}-VpcCIDR
-          FromPort: 30080
-          ToPort: 30080
+          FromPort: 80
+          ToPort: 80
           IpProtocol: tcp
           Description: transfer traffic from outside to subnets in VPC
 
@@ -34,7 +34,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Sub security group for nodes in ${ServiceName}
-      GroupName: !Sub ${ServiceName}-SecurityGroupForInstances
+      GroupName: SecurityGroupForInstances
       VpcId:
         Fn::ImportValue:
           !Sub ${ServiceName}-VPC
@@ -44,7 +44,7 @@ Resources:
           FromPort: 0
           ToPort: 65535
           IpProtocol: tcp
-          Description: k8s api-server bind port
+          Description: receive traffic from the same VPC
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
           FromPort: 0
