@@ -1,5 +1,5 @@
 Description:
-  This template deploys VPC & subnets for Kubernetess cluster.
+  VPC & subnets for Kubernetess cluster.
 
 
 Parameters:
