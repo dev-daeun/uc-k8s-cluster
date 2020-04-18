@@ -6,7 +6,7 @@ metadata:
   name: deployment-flask-wsgi
 
 spec:
-  replicas: 6
+  replicas: 2
 
   selector:
     matchLabels:
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: flask-wsgi
-          image: kde6260/flask-wsgi:lazy-apps
+          image: kde6260/flask-wsgi:single-interpreter
           ports:
             - containerPort: 9090
 
