@@ -6,7 +6,7 @@ metadata:
   name: deployment-nginx
 
 spec:
-  replicas: 3
+  replicas: 2
 
   selector:
     matchLabels:
@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
         - name: my-nginx
-          image: nginx:1.17.9-alpine
+          image: kde6260/my-nginx:0.0.4
           ports:
             - containerPort: 80
