@@ -10,7 +10,7 @@ metadata:
 
 spec:
   rules:
-    - host: uc-lb-loadb-1mr95cdp83k3e-797707118.us-west-2.elb.amazonaws.com
+    - host: dev-daeun.com
       http:
         paths:
           - path: /
