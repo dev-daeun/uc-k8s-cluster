@@ -41,7 +41,7 @@ Resources:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
       Tags:
         - Key: Name
-          Value: !Sub NatGateway in ${ServiceName}
+          Value: !Sub NAT for ${ServiceName}-PublicSubnet1
 
   ElasticIPforNATGateway2:
     Type: AWS::EC2::EIP
@@ -50,7 +50,7 @@ Resources:
       Domain: vpc
       Tags:
         - Key: Name
-          Value: !Sub EIP for NATGateway1 in ${ServiceName}
+          Value: !Sub EIP for NATGateway2 in ${ServiceName}
 
   NATGateway2:
     Type: AWS::EC2::NatGateway
@@ -61,7 +61,7 @@ Resources:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
       Tags:
         - Key: Name
-          Value: !Sub NatGateway in ${ServiceName}
+          Value: !Sub NAT for ${ServiceName}-PublicSubnet2
 
   ElasticIPforNATGatewayMaster:
     Type: AWS::EC2::EIP
@@ -81,7 +81,7 @@ Resources:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnetMaster
       Tags:
         - Key: Name
-          Value: !Sub NatGateway in ${ServiceName}
+          Value: !Sub NAT for ${ServiceName}-PublicSubnetMaster
 
 Outputs:
   InternetGateway:

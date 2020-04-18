@@ -1,7 +1,7 @@
 [
   {
     "ParameterKey": "ServiceName",
-    "ParameterValue": "udacity-capstone"
+    "ParameterValue": "uc-k8s-cluster"
   },
   {
     "ParameterKey": "VpcCIDR",
