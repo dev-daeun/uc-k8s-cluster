@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: flask-wsgi
-          image: kde6260/flask-wsgi:0.0.4
+          image: kde6260/flask-wsgi:lazy-apps
           ports:
             - containerPort: 9090
 
