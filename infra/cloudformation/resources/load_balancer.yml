@@ -1,5 +1,5 @@
 Description:
-  This template deploys load balancer which distributes traffic to instances in private subnets via NAT in public subnets.
+ ALB distributing traffic to instances in private subnets via NAT in public subnets.
 
 
 Parameters:
@@ -11,6 +11,11 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
+      Type: application
+      Scheme: internet-facing
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: 10
       Subnets:
         - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet1
         - Fn::ImportValue: !Sub ${ServiceName}-PublicSubnet2
@@ -20,19 +25,22 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      HealthCheckIntervalSeconds: 35
+      HealthCheckEnabled: true
+      # HealthCheckIntervalSeconds should be bigger than HealthCheckTimeoutSeconds.
+      HealthCheckIntervalSeconds: 15
       HealthCheckPath: /
+      HealthCheckPort: 80
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 30
+      HealthCheckTimeoutSeconds: 10
       # if load balancer requests 5 times to target and it returns OK 5 times, it is considered healthy.
       HealthyThresholdCount: 5
-      Port: 30080
-      Protocol: HTTP
-      Matcher:
-        HttpCode: 200
       # if load balancer requests 5 times to target and it returns Internal Server Error or does not respond 5 times,
       # it is considered unhealthy.
       UnhealthyThresholdCount: 5
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200
       VpcId:
         Fn::ImportValue: !Sub ${ServiceName}-VPC
 
