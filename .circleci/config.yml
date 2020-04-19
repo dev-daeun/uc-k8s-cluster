@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/udacity-capstone
+    working_directory: ~/uc-k8s-cluster
     docker:
       - image: kde6260/circleci-agent:latest
 
