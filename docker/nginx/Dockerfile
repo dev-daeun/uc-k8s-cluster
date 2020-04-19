@@ -7,3 +7,5 @@ COPY . /home/udacity-capstone
 RUN rm /etc/nginx/nginx.conf
 
 RUN cp ./nginx/nginx.conf /etc/nginx/nginx.conf
+
+CMD ["nginx", "-c", "/etc/nginx/nginx.conf"]
