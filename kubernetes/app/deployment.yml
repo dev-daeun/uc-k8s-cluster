@@ -25,9 +25,16 @@ spec:
           ports:
             - containerPort: 80
         - name: flask-wsgi
-          image: kde6260/flask-wsgi:buffer-size
+          image: kde6260/flask-wsgi:buffer-timeout
           ports:
             - containerPort: 9090
+          resources:
+            limits:
+              memory: "200Mi"
+            requests:
+              memory: "100Mi"
+            command: ["stress"]
+            args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]
 
   strategy:
     type: RollingUpdate
