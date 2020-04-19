@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: deployment-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nginx-uwsgi-flask
+
+  template:
+    metadata:
+      name: nginx-uwsgi-flask
+      labels:
+        # selector의 matchLabels과 동일함.
+        app: nginx-uwsgi-flask
+    spec:
+      containers:
+        - name: my-nginx
+          image: kde6260/my-nginx:localhost
+          ports:
+            - containerPort: 80
+        - name: flask-wsgi
+          image: kde6260/flask-wsgi:buffer-size
+          ports:
+            - containerPort: 9090
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 4
