@@ -6,5 +6,7 @@ RUN chmod +x /bin/hadolint
 
 # Install pylint for linting Python code
 RUN pip install pylint==2.4.4
+# Install requests for testing flask API
+RUN pip install requests==2.23.0
 
 CMD /bin/bash
