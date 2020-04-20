@@ -25,7 +25,7 @@ spec:
           ports:
             - containerPort: 80
         - name: flask-wsgi
-          image: kde6260/flask-wsgi:gunicorn
+          image: kde6260/flask-wsgi:alpine
           ports:
             - containerPort: 9090
 
