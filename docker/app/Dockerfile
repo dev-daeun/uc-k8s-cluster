@@ -1,15 +1,11 @@
-FROM python:3.7.3-stretch
+FROM python:3.7-alpine
 
-RUN mkdir /home/uc-k8c-cluster
+RUN mkdir -p /home/uc-k8s-cluster/app
+COPY ./app /home/uc-k8s-cluster/app
+WORKDIR /home/uc-k8s-cluster/app
 
-WORKDIR /home/uc-k8c-cluster
-
-COPY . /home/uc-k8c-cluster
-
-RUN pip install --upgrade pip && pip install --trusted-host pypi.python.org -r app/requirements.txt
+RUN pip install --upgrade pip && pip install --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 9090
 
-WORKDIR /home/uc-k8c-cluster/app
-
-ENTRYPOINT ['gunicorn',  '--workers=2', '--bind 0.0.0.0:9090', 'app:flask_app']
+ENTRYPOINT gunicorn --workers=2 --bind 0.0.0.0:9090 app:flask_app
