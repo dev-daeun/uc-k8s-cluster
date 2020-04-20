@@ -1,13 +1,15 @@
 FROM python:3.7.3-stretch
 
-RUN mkdir /home/udacity-capstone
+RUN mkdir /home/uc-k8c-cluster
 
-WORKDIR /home/udacity-capstone
+WORKDIR /home/uc-k8c-cluster
 
-COPY . /home/udacity-capstone
+COPY . /home/uc-k8c-cluster
 
 RUN pip install --upgrade pip && pip install --trusted-host pypi.python.org -r app/requirements.txt
 
 EXPOSE 9090
 
-ENTRYPOINT ["uwsgi", "uwsgi.ini"]
+WORKDIR /home/uc-k8c-cluster/app
+
+ENTRYPOINT ['gunicorn',  '--workers=2', '--bind 0.0.0.0:9090', 'app:flask_app']
