@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: my-nginx
-          image: kde6260/my-nginx:gunicorn
+          image: kde6260/my-nginx:curl
           ports:
             - containerPort: 80
         - name: flask-wsgi
