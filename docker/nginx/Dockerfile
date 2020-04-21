@@ -8,9 +8,6 @@ RUN rm /etc/nginx/nginx.conf
 
 RUN cp ./nginx/nginx.conf /etc/nginx/nginx.conf
 
-RUN apt-get update -y
-RUN apt-get install curl -y
-
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
