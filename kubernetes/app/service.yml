@@ -9,7 +9,7 @@ spec:
   type: NodePort
   externalTrafficPolicy: Local
   selector:
-    app: nginx-uwsgi-flask
+    app: nginx-gunicorn-flask
   ports:
     - name: node-port
       port: 8080

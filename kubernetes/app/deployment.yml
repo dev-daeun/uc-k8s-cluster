@@ -10,22 +10,22 @@ spec:
 
   selector:
     matchLabels:
-      app: nginx-uwsgi-flask
+      app: nginx-gunicorn-flask
 
   template:
     metadata:
-      name: nginx-uwsgi-flask
+      name: nginx-gunicorn-flask
       labels:
         # selector의 matchLabels과 동일함.
-        app: nginx-uwsgi-flask
+        app: nginx-gunicorn-flask
     spec:
       containers:
         - name: my-nginx
           image: kde6260/my-nginx:stable
           ports:
             - containerPort: 80
-        - name: flask-wsgi
-          image: kde6260/flask-wsgi:alpine
+        - name: flask-gunicorn
+          image: kde6260/flask-gunicorn:0.0.1
           ports:
             - containerPort: 9090
 
