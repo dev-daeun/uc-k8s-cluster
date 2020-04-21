@@ -4,9 +4,9 @@ FROM python:3.7.3-stretch
 RUN wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 --no-check-certificate
 RUN chmod +x /bin/hadolint
 
-# Install pylint for linting Python code
-RUN pip install pylint==2.4.4
-# Install requests for testing flask API
-RUN pip install requests==2.23.0
+# Install pip packages for linting python codes and executing unit tests.
+COPY ./requirements_test.txt /home/requirements_test.txt
+WORKDIR /home/
+RUN pip install --upgrade pip && pip install -r requirements_test.txt
 
 CMD /bin/bash
