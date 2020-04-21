@@ -1,4 +1,4 @@
-# udacity-capstone [![<CircleCI>](https://circleci.com/gh/dev-daeun/uc-k8s-cluster.svg?style=svg)](https://app.circleci.com/pipelines/github/dev-daeun/udacity-capstone)
+# uc-k8s-cluster [![<CircleCI>](https://circleci.com/gh/dev-daeun/uc-k8s-cluster.svg?style=svg)](https://app.circleci.com/pipelines/github/dev-daeun/udacity-capstone)
 
 
 
@@ -19,16 +19,14 @@ $ sh create_stack.sh uc-instance resources/instance.yml parameters/service_name.
 
 
 ## CI & CD 
-* CircleCI for Continuous Integration
-* Jenkins for Continues Deployment
 
 
-### CI workflow
+#### CI workflow
 1. Lint Python code
 2. Lint Dockerfile
 3. Execute unit tests
 
-### CD workflow
+#### CD workflow
 1. Build and push docker image whose version is in the branch which passed CI workflow.
 2. Update Kubernetes deployment template to the version of pushed image.
 3. Apply updated template to Kubernetes cluster.
