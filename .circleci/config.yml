@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Lint Dockerfile
           command: |
-            hadolint docker/app/Dockerfile --ignore DL3013
+            hadolint docker/app/Dockerfile --ignore DL3013 --ignore DL3025
             hadolint docker/nginx/Dockerfile --ignore DL3013
 
       - run:
