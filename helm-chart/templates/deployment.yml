@@ -10,24 +10,24 @@ spec:
 
   selector:
     matchLabels:
-      app: {{ .Values.deployment.app-label }}
+      app: {{ .Values.deployment.appLabel }}
 
   template:
     metadata:
-      name: {{ .Values.deployment.app-label }}
+      name: {{ .Values.deployment.appLabel }}
       labels:
         # selector의 matchLabels과 동일함.
-        app: {{ .Values.deployment.app-label }}
+        app: {{ .Values.deployment.appLabel }}
     spec:
       containers:
         - name: my-nginx
-          image: {{ .Values.deployment.my-nginx.image }}
+          image: {{ .Values.deployment.myNginx.image }}
           ports:
-            - containerPort: {{ .Values.deployment.my-nginx.containerPort }}
+            - containerPort: {{ .Values.deployment.myNginx.containerPort }}
         - name: flask-gunicorn
-          image: {{ .Values.deployment.flask-gunicorn.image }}
+          image: {{ .Values.deployment.flaskGunicorn.image }}
           ports:
-            - containerPort: {{ .Values.deployment.flask-gunicorn.containerPort }}
+            - containerPort: {{ .Values.deployment.flaskGunicorn.containerPort }}
 
   strategy:
     type: RollingUpdate

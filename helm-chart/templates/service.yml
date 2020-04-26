@@ -9,9 +9,9 @@ spec:
   type: NodePort
   externalTrafficPolicy: Local
   selector:
-    app: {{ .Values.deployment.app-label }}
+    app: {{ .Values.deployment.appLabel }}
   ports:
     - name: node-port
       port: {{ .Values.service.port }}
-      targetPort: {{ .Values.deployment.my-nginx.containerPort }}
+      targetPort: {{ .Values.deployment.myNginx.containerPort }}
       nodePort: {{ .Values.service.nodePort }}
