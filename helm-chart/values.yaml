@@ -24,6 +24,9 @@ service:
   nodePort: 30080
 
 
+namespace: uc-k8s-cluster
+
+
 image:
   repository: nginx
   pullPolicy: IfNotPresent

@@ -4,6 +4,7 @@ kind: Deployment
 
 metadata:
   name: deployment-app
+  namespace: {{ .Values.namespace }}
 
 spec:
   replicas: {{ .Values.deployment.replicaCount }}

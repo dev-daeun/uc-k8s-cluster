@@ -4,6 +4,7 @@ kind: Service
 
 metadata:
   name: service-app
+  namespace: {{ .Values.namespace }}
 
 spec:
   type: {{ .Values.service.type }}
