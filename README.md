@@ -21,17 +21,28 @@ $ sh create_stack.sh uc-instance resources/instance.yml parameters/service_name.
 ## CI & CD 
 
 
-#### CI workflow
+#### CI workflow in CircleCi
 1. Lint Python code
 2. Lint Dockerfile
 3. Execute unit tests
 
-#### CD workflow
+#### CD workflow using Helm
 1. Build and push docker image whose version is in the branch which passed CI workflow.
-2. Update Kubernetes deployment template to the version of pushed image.
-3. Apply updated template to Kubernetes cluster.
-4. Execute sanity check in newly deployed cluster. Request to load-balancer in production environment.
-5. If there's something wrong in sanity check, rollback to previous version of image.
+```
+$ docker build -t flask-gunicorn -f docker/app/Dockerfile .
+$ docker tag flask-gunicorn kde6260/flask-gunicorn:<new-version>
+$ docker push kde6260/image:<new-version>
+```
+
+2. access Helm server via SSH.
+```
+$ ssh ubuntu@54.148.201.124:22 -i udacity-capstone.pem
+```
+
+3. Upgrade Helm release using command below.
+```
+helm upgrade -f helm-chart/values.yaml --repo chartmuseum --set deployment.flaskGunicorn.image=kde6260/flask-gunicorn:<new-version> my-helm-chart ./helm-chart
+```
 
 ### Reference
 * [Install a Kubernetes cluster on AWS using kops](https://kubernetes.io/docs/setup/production-environment/tools/kops/)
