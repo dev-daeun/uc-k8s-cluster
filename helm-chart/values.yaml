@@ -8,10 +8,12 @@ deployment:
   app-label: nginx-gunicorn-flask
 
   my-nginx:
+  # use --set option when deploying new version of image
     image: kde6260/my-nginx:stable
     containerPort: 80
 
   flask-gunicorn:
+    # use --set option when deploying new version of image
     image: kde6260/flask-gunicorn:0.0.1
     containerPort: 9090
 
