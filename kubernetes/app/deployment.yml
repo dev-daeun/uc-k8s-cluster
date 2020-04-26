@@ -6,28 +6,28 @@ metadata:
   name: deployment-app
 
 spec:
-  replicas: 6
+  replicas: {{ .Values.deployment.replicaCount }}
 
   selector:
     matchLabels:
-      app: nginx-gunicorn-flask
+      app: {{ .Values.deployment.app-label }}
 
   template:
     metadata:
-      name: nginx-gunicorn-flask
+      name: {{ .Values.deployment.app-label }}
       labels:
         # selector의 matchLabels과 동일함.
-        app: nginx-gunicorn-flask
+        app: {{ .Values.deployment.app-label }}
     spec:
       containers:
         - name: my-nginx
-          image: kde6260/my-nginx:stable
+          image: {{ .Values.deployment.my-nginx.image }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.deployment.my-nginx.containerPort }}
         - name: flask-gunicorn
-          image: kde6260/flask-gunicorn:0.0.1
+          image: {{ .Values.deployment.flask-gunicorn.image }}
           ports:
-            - containerPort: 9090
+            - containerPort: {{ .Values.deployment.flask-gunicorn.containerPort }}
 
   strategy:
     type: RollingUpdate

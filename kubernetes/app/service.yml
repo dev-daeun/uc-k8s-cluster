@@ -9,9 +9,9 @@ spec:
   type: NodePort
   externalTrafficPolicy: Local
   selector:
-    app: nginx-gunicorn-flask
+    app: {{ .Values.deployment.app-label }}
   ports:
     - name: node-port
       port: 8080
-      targetPort: 80
+      targetPort: {{ .Values.deployment.my-nginx.containerPort }}
       nodePort: 30080
