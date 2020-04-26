@@ -58,6 +58,6 @@ Create the name of the service account to use
 {{- if .Values.serviceAccount.create }}
 {{- default (include "helm-chart.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "helm-chart-account" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
