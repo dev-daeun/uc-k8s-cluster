@@ -24,9 +24,6 @@ service:
   nodePort: 30080
 
 
-namespace: uc-k8s-cluster
-
-
 image:
   repository: nginx
   pullPolicy: IfNotPresent
@@ -39,12 +36,12 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: helm-chart-account
 
 podAnnotations: {}
 
