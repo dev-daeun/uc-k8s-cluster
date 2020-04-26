@@ -12,6 +12,6 @@ spec:
     app: {{ .Values.deployment.app-label }}
   ports:
     - name: node-port
-      port: 8080
+      port: {{ .Values.service.port }}
       targetPort: {{ .Values.deployment.my-nginx.containerPort }}
-      nodePort: 30080
+      nodePort: {{ .Values.service.nodePort }}

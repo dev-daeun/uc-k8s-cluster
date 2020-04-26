@@ -17,3 +17,7 @@ deployment:
     image: kde6260/flask-gunicorn:0.0.1
     containerPort: 9090
 
+
+service:
+  port: 8080
+  nodePort: 30080
