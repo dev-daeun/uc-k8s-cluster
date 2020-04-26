@@ -12,4 +12,8 @@ def index():
 
 @flask_app.route('/info')
 def info():
-    return 'Info'
+    return {
+        'email': 'kde6260@gmail.com',
+        'linked-in': 'https://www.linkedin.com/in/daeun-kim-156085183/',
+        'github': 'https://github.com/dev-daeun',
+    }
