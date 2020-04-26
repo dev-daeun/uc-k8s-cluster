@@ -6,7 +6,7 @@ metadata:
   name: service-app
 
 spec:
-  type: NodePort
+  type: {{ .Values.service.type }}
   externalTrafficPolicy: Local
   selector:
     app: {{ .Values.deployment.appLabel }}
