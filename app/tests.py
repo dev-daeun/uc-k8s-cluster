@@ -1,3 +1,4 @@
+import json
 import os
 
 import requests
@@ -13,4 +14,8 @@ def test_index():
 
 def test_info():
     response = requests.get(os.path.join(BASE_URL, 'info'))
-    assert response.content.decode('utf-8') == 'Info'
+    assert json.loads(response.content.decode('utf-8')) == {
+        'email': 'kde6260@gmail.com',
+        'linked-in': 'https://www.linkedin.com/in/daeun-kim-156085183/',
+        'github': 'https://github.com/dev-daeun',
+    }
