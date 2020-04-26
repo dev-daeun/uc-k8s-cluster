@@ -1,0 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+
+kind: Role
+
+metadata:
+  namespace: default
+  name: resource-deploy
+  rules:
+    - apiGroups: [""]
+    - resources: ["services", "deployments"]
+    - verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+
+---
+
+kind: RoleBinding
+
+metadata:
+  name: resource-deploy-rolebinding
+  namespace: default
+
+subjects:
+  - kind: ServiceAccount
+    name: helm-chart-account
+    namespace: default
+
+# assign role 'resource-deploy' to a service account named 'helm-chart-account'.
+roleRef:
+  kind: Role
+  name: resource-deploy
+  apiGroup: rbac.authorization.k8s.io
