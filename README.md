@@ -1,6 +1,11 @@
 # uc-k8s-cluster [![<CircleCI>](https://circleci.com/gh/dev-daeun/uc-k8s-cluster.svg?style=svg)](https://app.circleci.com/pipelines/github/dev-daeun/udacity-capstone)
 
 
+## Access URL below.
+[Hello, This is DaEun Kim.](http://uc-lb-LoadB-1S304KYC4H5FN-2071760962.us-west-2.elb.amazonaws.com) <br>
+[My info.](http://uc-lb-LoadB-1S304KYC4H5FN-2071760962.us-west-2.elb.amazonaws.com/info)
+
+
 
 ## How to deploy AWS resources for k8s cluster
 
