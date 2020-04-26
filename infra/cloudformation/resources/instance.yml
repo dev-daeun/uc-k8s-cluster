@@ -21,6 +21,29 @@ Resources:
       SubnetId:
         Fn::ImportValue: !Sub ${ServiceName}-PublicSubnetMaster
 
+  CDServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+      ImageId: ami-0756ed94dd77be215
+      InstanceType: t2.medium
+      KeyName: udacity-capstone
+      SubnetId:
+        Fn::ImportValue: !Sub ${ServiceName}-PublicSubnetMaster
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y apt-transport-https curl
+          apt-get update && apt-get install -y apt-transport-https gnupg2
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+          apt-get update -y
+          apt-get install -y kubectl
+
   ControlPlaneNode:
     Type: AWS::EC2::Instance
     Properties:
