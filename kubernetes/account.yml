@@ -5,10 +5,11 @@ kind: Role
 metadata:
   namespace: default
   name: resource-deploy
-  rules:
-    - apiGroups: [""]
-    - resources: ["services", "deployments"]
-    - verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+rules:
+  - apiGroups: [""]
+  - resources: ["services", "deployments"]
+  - verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
 
 ---
